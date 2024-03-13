@@ -1,6 +1,7 @@
 using Documenter
 using DataFrames
 using CategoricalArrays
+using DocumenterVitepress
 
 DocMeta.setdocmeta!(DataFrames, :DocTestSetup, :(using DataFrames); recursive=true)
 
@@ -13,16 +14,18 @@ makedocs(
     doctest = true,
     clean = false,
     sitename = "DataFrames.jl",
-    format = Documenter.HTML(
-        canonical = "https://juliadata.github.io/DataFrames.jl/stable/",
-        assets = ["assets/favicon.ico"],
-        edit_link = "main",
-        size_threshold_ignore = ["man/basics.md", "lib/functions.md"],
+    format=DocumenterVitepress.MarkdownVitepress(
+        repo = "github.com/JuliaData/DataFrames.jl", # this must be the full URL!
+        devbranch = "main",
+        devurl = "dev";
     ),
-    pages = Any[
-        "Introduction" => "index.md",
+    draft = false,
+    source = "src",
+    build = "build",
+    pages = [
+        "Introduction" => "introduction.md",
         "First Steps with DataFrames.jl" => "man/basics.md",
-        "User Guide" => Any[
+        "User Guide" => [
             "Getting Started" => "man/getting_started.md",
             "Working with DataFrames" => "man/working_with_dataframes.md",
             "Importing and Exporting Data (I/O)" => "man/importing_and_exporting.md",
@@ -35,12 +38,12 @@ makedocs(
             "Data manipulation frameworks" => "man/querying_frameworks.md",
             "Comparison with Python/R/Stata" => "man/comparisons.md"
         ],
-        "API" => Any[
+        "API" => [
             "Types" => "lib/types.md",
             "Functions" => "lib/functions.md",
             "Indexing" => "lib/indexing.md",
             "Metadata" => "lib/metadata.md",
-            hide("Internals" => "lib/internals.md"),
+            #hide("Internals" => "lib/internals.md"),
         ]
     ],
 )
@@ -52,7 +55,9 @@ deploydocs(
     # options
     repo = "github.com/JuliaData/DataFrames.jl.git",
     target = "build",
+    branch = "gh-pages",
     deps = nothing,
     make = nothing,
-    devbranch = "main"
+    devbranch = "main",
+    push_preview = true
 )

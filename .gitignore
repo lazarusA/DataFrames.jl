@@ -2,7 +2,8 @@
 *.jl.*.cov
 *.jl.mem
 docs/build/
-docs/site/
+node_modules/
+package-lock.json
 Manifest.toml
 .DS_Store
 .vscode
